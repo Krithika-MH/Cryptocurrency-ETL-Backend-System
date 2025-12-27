@@ -598,27 +598,57 @@ docker-compose down
 docker-compose up -d --build
 ```
 
-### Production Deployment
-
-For production deployment on cloud platforms:
-
-**AWS:**
-- Database: Amazon RDS for PostgreSQL
-- API: AWS Elastic Beanstalk or ECS
-- Scheduler: Amazon EventBridge
-
-**GCP:**
-- Database: Cloud SQL for PostgreSQL
-- API: Cloud Run
-- Scheduler: Cloud Scheduler
-
-**Azure:**
-- Database: Azure Database for PostgreSQL
-- API: Azure App Service
-- Scheduler: Azure Logic Apps
 
 ---
 
+## 🌐 Live Production Deployment
+
+**Deployed Application:** [https://kasparro-backend-krithika-m.onrender.com](https://kasparro-backend-krithika-m.onrender.com)
+
+### Live Endpoints
+
+- **API Documentation:** [https://kasparro-backend-krithika-m.onrender.com/docs](https://kasparro-backend-krithika-m.onrender.com/docs)
+- **Health Check:** [https://kasparro-backend-krithika-m.onrender.com/health](https://kasparro-backend-krithika-m.onrender.com/health)
+- **Get Data:** [https://kasparro-backend-krithika-m.onrender.com/data](https://kasparro-backend-krithika-m.onrender.com/data)
+- **Statistics:** [https://kasparro-backend-krithika-m.onrender.com/stats](https://kasparro-backend-krithika-m.onrender.com/stats)
+
+### Quick Test
+
+Check health
+curl https://kasparro-backend-krithika-m.onrender.com/health
+
+Get data
+curl https://kasparro-backend-krithika-m.onrender.com/data?limit=5
+
+View statistics
+curl https://kasparro-backend-krithika-m.onrender.com/stats
+
+
+### Deployment Details
+
+- **Platform:** Render.com (Free Tier)
+- **Database:** PostgreSQL 15 (Cloud)
+- **Region:** Singapore (Asia-Pacific)
+- **Container:** Docker
+- **Auto Deploy:** Enabled (on every push to main branch)
+
+### Automated ETL Scheduling
+
+The ETL pipeline is scheduled to run automatically every hour using **GitHub Actions**.
+
+**Cron Schedule:** `0 * * * *` (Every hour at minute 0)
+
+**Workflow File:** `.github/workflows/etl-cron.yml`
+
+The workflow:
+1. Triggers every hour automatically
+2. Checks the health endpoint to verify system status
+3. Monitors ETL execution via the statistics endpoint
+4. Logs are available in the GitHub Actions tab
+
+**View Workflow Runs:** [GitHub Actions](https://github.com/Krithika-MH/kasparro-backend-Krithika-M/actions)
+
+-
 ##  Troubleshooting
 
 ### Database Connection Issues
