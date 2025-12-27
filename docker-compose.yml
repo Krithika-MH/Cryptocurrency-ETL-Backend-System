@@ -1,0 +1,49 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    container_name: kasparro_db
+    environment:
+      POSTGRES_USER: kasparro
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: kasparro
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kasparro"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - kasparro-network
+
+  # FastAPI Application
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kasparro_api
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://kasparro:password@postgres:5432/kasparro
+      CSV_FILE_PATH: data/crypto_sample.csv
+      BATCH_SIZE: 100
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - kasparro-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  kasparro-network:
+    driver: bridge
