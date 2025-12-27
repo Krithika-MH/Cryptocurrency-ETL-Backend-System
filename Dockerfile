@@ -21,5 +21,6 @@ COPY . .
 # Expose port 8000
 EXPOSE 8000
 
-# Default command (can be overridden in docker-compose)
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# At the bottom of Dockerfile, replace the CMD line with:
+CMD python services/database.py && uvicorn api.main:app --host 0.0.0.0 --port 8000
+
