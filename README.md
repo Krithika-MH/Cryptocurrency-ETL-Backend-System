@@ -2,7 +2,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-009688.svg)](https://fastapi.tiangolo.com)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-316192.svg)](https://www.postgresql.org)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-316192.svg)](https://www.postgresql.org)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)](https://www.docker.com)
 [![Tests](https://img.shields.io/badge/Tests-34%2F34%20Passing-success.svg)](.)
 
@@ -550,7 +550,7 @@ The `docker-compose.yml` defines two services:
 ```yaml
 services:
   postgres:
-    image: postgres:15
+    image: postgres:18
     container_name: kasparro_db
     ports:
       - "5433:5432"
@@ -627,7 +627,7 @@ curl https://kasparro-backend-krithika-m.onrender.com/stats
 ### Deployment Details
 
 - **Platform:** Render.com (Free Tier)
-- **Database:** PostgreSQL 15 (Cloud)
+- **Database:** PostgreSQL 18 (Cloud)
 - **Region:** Singapore (Asia-Pacific)
 - **Container:** Docker
 - **Auto Deploy:** Enabled (on every push to main branch)
