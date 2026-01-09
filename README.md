@@ -1,4 +1,4 @@
-# Kasparro Backend - Cryptocurrency ETL System
+# Cryptocurrency ETL Backend System
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-009688.svg)](https://fastapi.tiangolo.com)
@@ -84,8 +84,9 @@ Before you begin, ensure you have:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/kasparro-backend-Krithika-M.git
-cd kasparro-backend-Krithika-M
+git clone https://github.com/yourusername/Cryptocurrency-ETL-Backend-System
+.git
+cd Cryptocurrency-ETL-Backend-System
 
 # Start all services (PostgreSQL + API)
 docker-compose up -d
@@ -118,7 +119,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 # Create .env file
-echo "DATABASE_URL=postgresql://kasparro:password@127.0.0.1:5433/kasparro" > .env
+echo "DATABASE_URL=postgresql://Crypto:password@127.0.0.1:5433/Crypto" > .env
 echo "CSV_FILE_PATH=data/crypto_sample.csv" >> .env
 echo "BATCH_SIZE=100" >> .env
 
@@ -156,7 +157,7 @@ GET /
 **Response:**
 ```json
 {
-  "message": "Welcome to Kasparro Backend API",
+  "message": "Welcome to Cryptocurrency ETL Backend API",
   "version": "1.0.0",
   "docs": "/docs",
   "endpoints": {
@@ -431,7 +432,7 @@ Visit http://localhost:8000/docs for Swagger UI with interactive testing.
 ##  Project Structure
 
 ```
-kasparro-backend-Krithika-M/
+Cryptocurrency-ETL-Backend-System-Krithika-M/
 │
 ├── api/                              # FastAPI application
 │   ├── __init__.py
@@ -534,7 +535,7 @@ Create a `.env` file in the project root:
 
 ```bash
 # Database Configuration
-DATABASE_URL=postgresql://kasparro:password@127.0.0.1:5433/kasparro
+DATABASE_URL=postgresql://Crypto:password@127.0.0.1:5433/Crpto
 
 # CSV File Path
 CSV_FILE_PATH=data/crypto_sample.csv
@@ -551,31 +552,31 @@ The `docker-compose.yml` defines two services:
 services:
   postgres:
     image: postgres:18
-    container_name: kasparro_db
+    container_name: crypto_db
     ports:
       - "5433:5432"
     environment:
-      POSTGRES_USER: kasparro
+      POSTGRES_USER: crypto
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: kasparro
+      POSTGRES_DB: crypto
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U kasparro"]
+      test: ["CMD-SHELL", "pg_isready -U crypto"]
       interval: 10s
       timeout: 5s
       retries: 5
 
   api:
     build: .
-    container_name: kasparro_api
+    container_name: crypto_api
     ports:
       - "8000:8000"
     depends_on:
       postgres:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgresql://kasparro:password@postgres:5432/kasparro
+      DATABASE_URL: postgresql://crypto:password@postgres:5432/crypto
 ```
 
 ---
@@ -646,7 +647,7 @@ The workflow:
 3. Monitors ETL execution via the statistics endpoint
 4. Logs are available in the GitHub Actions tab
 
-**View Workflow Runs:** [GitHub Actions](https://github.com/Krithika-MH/kasparro-backend-Krithika-M/actions)
+**View Workflow Runs:** [GitHub Actions](https://github.com/Krithika-MH/Cryptocurrency-ETL-Backend-System/actions)
 
 ##  Troubleshooting
 
@@ -681,8 +682,8 @@ lsof -ti:8000 | xargs kill -9
 
 ```bash
 # Recreate test database
-docker exec -it kasparro_db psql -U kasparro -d postgres -c "DROP DATABASE IF EXISTS kasparro_test;"
-docker exec -it kasparro_db psql -U kasparro -d postgres -c "CREATE DATABASE kasparro_test;"
+docker exec -it crypto_db psql -U crypto -d postgres -c "DROP DATABASE IF EXISTS crypto_test;"
+docker exec -it crypto_db psql -U crypto -d postgres -c "CREATE DATABASE crypto_test;"
 
 # Run tests again
 pytest tests/ -v
@@ -695,10 +696,10 @@ pytest tests/ -v
 docker-compose logs api | grep ETL
 
 # Run ETL manually
-docker exec -it kasparro_api python -m ingestion.etl
+docker exec -it crypto_api python -m ingestion.etl
 
 # Check checkpoint status
-docker exec -it kasparro_db psql -U kasparro -d kasparro -c "SELECT * FROM etl_checkpoints;"
+docker exec -it crypto_db psql -U crypto -d crypto -c "SELECT * FROM etl_checkpoints;"
 ```
 
 ### API Not Responding
